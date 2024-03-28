@@ -1,10 +1,21 @@
 <script setup lang="ts">
+import JobListComponent from '@/components/JobListComponent.vue';
 import { ref } from 'vue';
-const name = ref('Link');
+import type Job from './types/job';
+
+const jobs = ref<Job[]>([
+  { title: 'farm worker', location: 'near ranch', salary: 3500, id: '1' },
+  { title: 'school teacher', location: 'Camil School', salary: 2000, id: '2' },
+  { title: 'bus driver', location: 'salta village', salary: 15000, id: '3' },
+  { title: 'prison guard', location: 'alkatraz', salary: 5000, id: '4' },
+  { title: 'manager', location: 'kfc', salary: 1500, id: '5' },
+]);
 </script>
 
 <template>
-  <div class="app">Hello {{ name }}!!</div>
+  <div class="app">
+    <JobListComponent :jobs="jobs" />
+  </div>
 </template>
 
 <style scoped>
