@@ -2,6 +2,7 @@
 import JobListComponent from '@/components/JobListComponent.vue';
 import { ref } from 'vue';
 import type Job from './types/job';
+import type OrderTerm from './types/OrderTerm';
 
 const jobs = ref<Job[]>([
   { title: 'farm worker', location: 'near ranch', salary: 3500, id: '1' },
@@ -10,74 +11,44 @@ const jobs = ref<Job[]>([
   { title: 'prison guard', location: 'alkatraz', salary: 5000, id: '4' },
   { title: 'manager', location: 'kfc', salary: 1500, id: '5' },
 ]);
+
+const order = ref<OrderTerm>('title');
+
+const handleClick = (term: OrderTerm) => {
+  order.value = term;
+};
 </script>
 
 <template>
   <div class="app">
-    <JobListComponent :jobs="jobs" />
+    <header>
+      <div class="order">
+        <button @click="handleClick('title')">order by title</button>
+        <button @click="handleClick('salary')">order by salary</button>
+        <button @click="handleClick('location')">order by location</button>
+      </div>
+    </header>
+
+    <JobListComponent :jobs="jobs" :order="order" />
   </div>
 </template>
 
 <style scoped>
+
 header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
   text-align: center;
-  margin-top: 2rem;
 }
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
+header .order {
+  margin-top: 20px;
 }
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+button {
+  margin: 0 10px;
+  color: #1195c9;
+  border: 3px solid #1195c9;
+  background: #d5f0ff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
 }
 </style>
