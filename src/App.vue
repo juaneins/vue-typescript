@@ -29,12 +29,11 @@ const handleClick = (term: OrderTerm) => {
       </div>
     </header>
 
-    <JobListComponent :jobs="jobs" :order="order" />
+    <JobListComponent :jobs="jobs" :order="order" :handleClick="handleClick"/>
   </div>
 </template>
 
 <style scoped>
-
 header {
   text-align: center;
 }

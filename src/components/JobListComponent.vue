@@ -1,18 +1,51 @@
-<script setup lang="ts">
-import type { PropType } from 'vue';
+<script lang="ts">
+import { defineComponent, computed, type PropType } from 'vue';
 import type Job from '@/types/job';
 import type OrderTerm from '@/types/OrderTerm';
 
-const { jobs, order } = defineProps({
-  jobs: Array as PropType<Job[]>,
-  order: String as PropType<OrderTerm>,
-});
+// const { jobs, order } = defineProps({
+//   jobs: Array as PropType<Job[]>,
+//   order: String as PropType<OrderTerm>,
+// });
+
+// const orderedJobs = computed(() => {
+//   if (!jobs || jobs.length === 0 || !order) {
+//     return [];
+//   }
+//   return [...jobs].sort((a: Job, b: Job) => {
+//     return a[order] > b[order] ? 1 : -1;
+//   });
+// });
+
+export default defineComponent({
+  props: {
+    jobs: {
+      type: Array as PropType<Job[]>,
+      required: true
+    },
+    order: {
+      type: String as PropType<OrderTerm>,
+      required: true
+    }
+  },
+  setup(props) {
+    const orderedJobs = computed(() => {
+      return [...props.jobs].sort((a: Job, b: Job) => {
+        return a[props.order] > b[props.order] ? 1 : -1
+      })
+    })
+
+    return { orderedJobs }
+  },
+})
+
 </script>
 <template>
   <div class="job-list">
     <p>Ordered by {{ order }}</p>
+    <p>{{ orderedJobs }}</p>
     <ul>
-      <li v-for="job in jobs" :key="job.id">
+      <li v-for="job in orderedJobs" :key="job.id">
         <h2>{{ job.title }} in {{ job.location }}</h2>
         <div class="salary">
           <p>${{ job.salary }}</p>
